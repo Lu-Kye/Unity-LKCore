@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 namespace LKBehaviorTree 
 {
-	public class Tree : MonoBehaviour 
+	public class BehaviorTree 
 	{
 		// Tree current status
 		TreeStatus _status = TreeStatus.None;
@@ -16,51 +16,73 @@ namespace LKBehaviorTree
 		TreeNode _root;
 
 		// Whether this tree is loop
-		public bool Loop = false;
+		public bool Loop = true;
 
-		public bool IsNone
+		public virtual bool IsNone
 		{
 			get { return this._status == TreeStatus.None; }
+			set { this._status = TreeStatus.None; }
 		}
 
-		public bool IsInit
+		public virtual bool IsInit
 		{
 			get { return this._status == TreeStatus.Init; }
+			set { this._status = TreeStatus.Init; }
 		}
 
-		public bool IsRunning
+		public virtual bool IsRunning
 		{
 			get { return this._status == TreeStatus.Running; }
+			set { this._status = TreeStatus.Running; }
 		}
 
-		public bool IsPause
+		public virtual bool IsPause
 		{
 			get { return this._status == TreeStatus.Pause; }
+			set { this._status = TreeStatus.Pause; }
 		}
 
-		public bool IsEnd
+		public virtual bool IsEnd
 		{
 			get { return this._status == TreeStatus.End; }
+			set { this._status = TreeStatus.End; }
 		}
 
-		// Do init before start this tree
-		public void Init()
+		protected virtual void Init()
 		{
-			this._status = TreeStatus.Init;
-			this._node = this._root;
+			// Implemented by derived class
 		}
 
 		// Do run if you want to start this tree
 		public void Run()
 		{
-			if (this._status != TreeStatus.Init)
+			if (!this.IsInit)
+			{
+				this.IsInit = true;
+				this.Init();
+			}
+
+			if (this.IsRunning)
+				return;
+			this.IsRunning = true;
+
+			this._node = this._root;
+		}
+
+		// Do pause if you want to pause this tree
+		public void Pause()
+		{
+			if (!this.IsRunning)
 				return;
 
-			this._status = TreeStatus.Running;
+			this.IsPause = true;
+
+			if (this._node != null)
+				this._node.Pause();
 		}
 
 		// Update every frame
-		void Update()
+		public void Update()
 		{
 			if (!this.IsRunning)
 				return;	
@@ -71,11 +93,15 @@ namespace LKBehaviorTree
 				{
 					if (!this.Loop)
 					{
-						this._status = TreeStatus.End;
+						this.IsEnd = true;
 						return;
 					}
 
 					this._node = this._root;
+
+					// Check, if error return 
+					if (this._node == null)
+						return;
 				}
 
 				if (this._node.IsNone)
@@ -85,9 +111,9 @@ namespace LKBehaviorTree
 					this._node.Run();
 
 				if (this._node.IsRunning)
-					this._node.Update();
+					this._node.Update(Time.deltaTime);
 
-				if (this._node.IsSuccess)
+				if (this._node.IsEnd)
 				{
 					this._node.Reset();
 					this._node = this._node.Child;
@@ -95,29 +121,35 @@ namespace LKBehaviorTree
 			}
 		}
 
-		// Do pause if you want to pause this tree
-		public void Pause()
-		{
-			this._status = TreeStatus.Pause;
-
-			if (this._node != null)
-				this._node.Pause();
-		}
-
-		#region for task
+		#region push
 		// Push a node(task) in this tree
-		public void PushNode(TreeNode node)
+		public TreeNode PushNode(TreeNode node)
 		{
 			if (this._root == null)
 				this._root = node;
 
 			if (this._node != null)
-			{
 				this._node.Child = node;
-				node.Parent = this._node;
-			}
 
 			this._node = node;
+
+			return this._node;
+		}
+
+		// Push a tree into this tree
+		public TreeNode PushTree(BehaviorTree tree)
+		{
+			if (tree._root == null)
+				return null;
+
+			var node = tree._root;
+			while (node != null)
+			{
+				this.PushNode(node);
+				node = node.Child;
+			}
+
+			return this._node;
 		}
 		#endregion
 	}

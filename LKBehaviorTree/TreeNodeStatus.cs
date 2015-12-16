@@ -5,6 +5,8 @@ namespace LKBehaviorTree
 {
 	public enum TreeNodeStatus
 	{
+		Error,
+
 		None,
 		Init,
 		Running,

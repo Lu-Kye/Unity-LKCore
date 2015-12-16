@@ -4,20 +4,19 @@ using LKBehaviorTree;
 
 public class BehaviorTreeExample : MonoBehaviour 
 {
-	public LKBehaviorTree.Tree tree;
+	BehaviorTree tree = new BehaviorTree();
 
 	void Start()
 	{
-		// Init tree
-		this.tree.PushNode(new TaskLog("Hello world"));
-		this.tree.PushNode(new TaskLog("Hello world1"));
-		this.tree.Init();
-
-		Debug.Log("Init Tree");
+		// Add nodes
+		this.tree.PushNode(new TaskLog("TestLog"));
 
 		// Start tree
 		this.tree.Run();
+	}
 
-		Debug.Log("Run Tree");
+	void Update()
+	{
+		
 	}
 }

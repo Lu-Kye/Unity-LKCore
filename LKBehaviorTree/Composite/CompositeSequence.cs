@@ -3,7 +3,8 @@ using System.Collections;
 
 namespace LKBehaviorTree
 {
-	public class Condition : TreeNode
+	public class CompositeSequence : Composite
 	{
+		
 	}
 }

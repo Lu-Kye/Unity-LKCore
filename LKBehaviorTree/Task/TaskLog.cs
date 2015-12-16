@@ -12,10 +12,9 @@ namespace LKBehaviorTree
 			this.Msg = msg;
 		}
 
-		public override void Step()
+		protected override void DoTask()
 		{
 			Debug.Log(this.Msg);
-			this.Success();
 		}
 	}
 }
