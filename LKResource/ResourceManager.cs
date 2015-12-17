@@ -1,15 +1,13 @@
 ﻿using UnityEngine;
-using Soul;
+using LKSingleton;
 
 /// <summary>
 /// Resources manager
 /// - Load resources under /Resources/ (prefab, material, texture .etc)
 /// - Return exact object type
 /// </summary>
-public partial class ResourceManager
+public partial class ResourceManager : SingleTonMonoBehaviour<ResourceManager>
 {
-	public static ResourceManager only = new ResourceManager();
-
 	// loader
 	IResourceLoader loader;
 	IResourceLoader loaderWWW;

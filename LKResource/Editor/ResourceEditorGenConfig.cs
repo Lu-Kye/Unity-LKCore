@@ -1,6 +1,5 @@
 using UnityEngine;
 using UnityEditor;
-using Soul;
 using UnityEditor.VersionControl;
 using System.IO;
 using System.Linq;
@@ -10,8 +9,10 @@ using System.Text;
 public partial class ResourceEditorGenConfig 
 {
 	// resources version
-	public static int Version {
-		get {
+	public static int Version 
+	{
+		get 
+		{
 			return 0;
 		}
 	}
@@ -30,8 +31,6 @@ public partial class ResourceEditorGenConfig
 	/// </summary>
 	public static void GenResourceConfig()
 	{
-		Debug.Log("Start generate resource config...");
-
 		EditorUtility.DisplayProgressBar("Generating resource config", "", 0f);
 
 		// version 
@@ -82,8 +81,6 @@ public partial class ResourceEditorGenConfig
 
 		// refresh asset
 		AssetDatabase.Refresh();
-
-		Debug.Log("Generate resource config success");
 	}
 }
 
@@ -175,7 +172,6 @@ public partial class ResourceEditorGenConfig
 		// code string
 		var codes =	"";
 		codes += @"using System.Collections.Generic;
-using Soul;
 
 public class ResourceConfig
 {
