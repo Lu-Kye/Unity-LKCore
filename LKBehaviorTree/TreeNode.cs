@@ -21,7 +21,8 @@ namespace LKBehaviorTree
 			set
 			{
 				this._child = value;
-				value._parent = this;
+				if (value != null)
+					value._parent = this;
 			}
 		}
 

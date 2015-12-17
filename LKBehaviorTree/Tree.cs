@@ -14,6 +14,17 @@ namespace LKBehaviorTree
 
 		// Root tree node
 		TreeNode _root;
+		public TreeNode Root
+		{
+			get { return this._root; }
+		}
+
+		// Last node
+		TreeNode _last;
+		public TreeNode Last
+		{
+			get { return this._last; }
+		}
 
 		// Whether this tree is loop
 		public bool Loop = true;
@@ -22,12 +33,6 @@ namespace LKBehaviorTree
 		{
 			get { return this._status == TreeStatus.None; }
 			set { this._status = TreeStatus.None; }
-		}
-
-		public virtual bool IsInit
-		{
-			get { return this._status == TreeStatus.Init; }
-			set { this._status = TreeStatus.Init; }
 		}
 
 		public virtual bool IsRunning
@@ -56,16 +61,17 @@ namespace LKBehaviorTree
 		// Do run if you want to start this tree
 		public void Run()
 		{
-			if (!this.IsInit)
-			{
-				this.IsInit = true;
-				this.Init();
-			}
-
 			if (this.IsRunning)
 				return;
-			this.IsRunning = true;
+			
+			// Try init
+			if (this.IsNone)
+				this.Init();
 
+			// Set running
+			this.IsRunning = true;
+			
+			// Reset first node
 			this._node = this._root;
 		}
 
@@ -122,6 +128,12 @@ namespace LKBehaviorTree
 		}
 
 		#region push
+		public T PushNode<T>()
+			where T : TreeNode, new()
+		{
+			return this.PushNode(new T()) as T;
+		}
+
 		// Push a node(task) in this tree
 		public TreeNode PushNode(TreeNode node)
 		{
@@ -132,6 +144,7 @@ namespace LKBehaviorTree
 				this._node.Child = node;
 
 			this._node = node;
+			this._last = node;
 
 			return this._node;
 		}

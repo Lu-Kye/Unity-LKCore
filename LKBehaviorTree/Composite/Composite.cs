@@ -38,7 +38,7 @@ namespace LKBehaviorTree
 		// Whether can continue to execute next child
 		protected virtual bool CanContinue()
 		{
-			return this._index < this._childs.Count;
+			return this._index < this._childs.Count - 1;
 		}
 
 		// Run current child
@@ -106,9 +106,12 @@ namespace LKBehaviorTree
 				this.DoCompositeUpdate(delta);
 
 				// Next
-				this.DoCompositeNext();
+				if (this.CanContinue())
+					this.DoCompositeNext();
+				else
+					break;
 
-			} while(this.CanContinue());
+			} while(true);
 
 			// End
 			this.DoCompositeEnd();

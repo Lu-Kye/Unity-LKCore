@@ -28,7 +28,7 @@ namespace LKBehaviorTree
 			{
 				this._updateTime = Time.realtimeSinceStartup;
 
-				this.DoTask();
+				this.DoTask(delta);
 				this.Success();
 
 				return;

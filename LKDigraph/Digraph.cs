@@ -48,9 +48,7 @@ public class Digraph
 	#region edge
 	Dictionary<DigraphNode, Dictionary<DigraphNode, float>> edges 
 		= new Dictionary<DigraphNode, Dictionary<DigraphNode, float>>();
-	#endregion
 
-	#region edge
 	/// <summary>
 	/// Add an edge.
 	/// </summary>
@@ -75,6 +73,8 @@ public class Digraph
 	}
 	#endregion
 
+	// Theory from
+	// http://baike.baidu.com/link?url=BcUJxRihcobZccuTsN4CX8Gzb8VUV4F5JVtU2xq-sJhdjSZl83SWk1E0W1plRkryhI5itaQGTpNS9ocBG1KbS49xT6LW18oqYUl_twVC_2EGFIOc-pSv6G1XSfn-_a9IMcJxr-pfhXKtDP9NPkK9FEkOBgQzz4vLDjWnU69Fnim
 	public float Dijkstra<TData>(IDigraphData startData, IDigraphData endData, out List<TData> path)
 		where TData : IDigraphData 
 	{

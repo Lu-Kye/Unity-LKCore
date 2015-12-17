@@ -12,7 +12,7 @@ namespace LKBehaviorTree
 			this.Msg = msg;
 		}
 
-		protected override void DoTask()
+		protected override void DoTask(float delta)
 		{
 			Debug.Log(this.Msg);
 		}

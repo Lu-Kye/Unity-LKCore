@@ -7,11 +7,11 @@ namespace LKBehaviorTree
 	{
 		protected override void DoUpdate(float delta)
 		{
-			this.DoTask();
+			this.DoTask(delta);
 			this.Success();
 		}
 
-		protected virtual void DoTask()
+		protected virtual void DoTask(float delta)
 		{
 			// Implemented by derived class	
 		}
