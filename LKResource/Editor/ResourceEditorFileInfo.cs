@@ -1,7 +1,7 @@
 ﻿using System.IO;
 using System.Text;
 
-public class ResourceToolFileInfo 
+public class ResourceEditorFileInfo 
 {
 	private string file;
 	public string File
@@ -59,7 +59,7 @@ public class ResourceToolFileInfo
 		}
 	}
 
-	public ResourceToolFileInfo(string file)
+	public ResourceEditorFileInfo(string file)
 	{
 		this.file = file;
 

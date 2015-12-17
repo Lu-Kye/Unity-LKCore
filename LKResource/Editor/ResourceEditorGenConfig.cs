@@ -7,7 +7,7 @@ using System.Linq;
 using System.Collections.Generic;
 using System.Text;
 
-public partial class ResourceToolGenConfig 
+public partial class ResourceEditorGenConfig 
 {
 	// resources version
 	public static int Version {
@@ -20,10 +20,10 @@ public partial class ResourceToolGenConfig
 	public static string[] EXTENSIONS = new string[]{"prefab", "mat", "shader", "json", "png"};
 
 	// dictionary name
-	public const string DIC_FIELDNAME = "dicResourceInfos";
+	public const string DIC_FIELDNAME = "dictResourceInfo";
 
 	// config file path
-	public const string CONFIG_PATH = "Runtime/Soul/Resource/ResourceConfig.cs";
+	public const string CONFIG_PATH = "Scripts/LKCore/LKResource/ResourceConfig.cs";
 
 	/// <summary>
 	/// Generate resources config
@@ -87,7 +87,7 @@ public partial class ResourceToolGenConfig
 	}
 }
 
-public partial class ResourceToolGenConfig
+public partial class ResourceEditorGenConfig
 {
 	static List<string> GetFiles(string resourcesPath, string extension)
 	{
@@ -103,7 +103,7 @@ public partial class ResourceToolGenConfig
 		for (int i = 0, max = files.Count; i < max; i++)
 		{
 			var file = files[i];
-			var fileInfo = new ResourceToolFileInfo(file);
+			var fileInfo = new ResourceEditorFileInfo(file);
 			var fileKey = fileInfo.Name;
 			var fileKeyIndex = -1;
 
@@ -144,7 +144,7 @@ public partial class ResourceToolGenConfig
 		for (int i = 0, max = files.Count; i < max; i++)
 		{
 			var file = files[i];
-			var fileInfo = new ResourceToolFileInfo(file);
+			var fileInfo = new ResourceEditorFileInfo(file);
 			var fileKey = fileInfo.Name;
 			var fileKeyIndex = -1;
 			
@@ -177,36 +177,33 @@ public partial class ResourceToolGenConfig
 		codes += @"using System.Collections.Generic;
 using Soul;
 
-//namespace Soul
-//{
-	public class ResourceConfig
-	{
+public class ResourceConfig
+{
 ";
 		codes += str1;
 
 		codes += @"
-		private static Dictionary<string, ResourceInfo> dicResourceInfos = new Dictionary<string, ResourceInfo>();
-		static ResourceConfig()
-		{
+	private static Dictionary<string, ResourceInfo> dictResourceInfo = new Dictionary<string, ResourceInfo>();
+	static ResourceConfig()
+	{
 ";
 		codes += str2;
 		codes += @"
-		}
+	}
 
-		/// <summary>
-		/// Gets the ResourceInfo by resource path
-		/// </summary>
-		/// <returns>The res info.</returns>
-		public static ResourceInfo GetResourceInfo(string path)
-		{
+	/// <summary>
+	/// Gets the ResourceInfo by resource path
+	/// </summary>
+	/// <returns>The res info.</returns>
+	public static ResourceInfo GetResourceInfo(string path)
+	{
 ";
 		codes += string.Format("\t\t\tif ({0}.ContainsKey(path)) ", DIC_FIELDNAME);
 		codes += string.Format("return {0}[path];", DIC_FIELDNAME);
 		codes += @"
-			return null;
-		}
+		return null;
 	}
-//}
+}
 ";
 
 		var file = new StreamWriter(filePath);

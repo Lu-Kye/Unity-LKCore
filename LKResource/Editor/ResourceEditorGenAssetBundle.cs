@@ -4,7 +4,7 @@ using System.IO;
 using UnityEditor;
 using System.Linq;
 
-public partial class ResourceToolGenAssetBundle 
+public partial class ResourceEditorGenAssetBundle 
 {
 	public const string ASSET_BUNDLES_FOLDER = "AssetBundles";
 	public const string ASSET_BUNDLES_INFO = "AssetBundlesInfo.json";
@@ -28,7 +28,7 @@ public partial class ResourceToolGenAssetBundle
 	}
 }
 
-partial class ResourceToolGenAssetBundle 
+partial class ResourceEditorGenAssetBundle 
 {
 	/// <summary>
 	/// Gens the asset bundles info.

@@ -1,10 +1,3 @@
-/// <summary>
-/// ************************************************************
-/// ------------------This file is auto generated --------------
-/// ------------------Plz dont edit!----------------------------
-/// ************************************************************
-/// </summary>
-using Soul;
 using UnityEngine;
 using System.Collections.Generic;
 using System;

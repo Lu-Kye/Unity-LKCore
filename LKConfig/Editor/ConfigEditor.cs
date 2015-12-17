@@ -6,32 +6,13 @@ using System.IO;
 using System.Linq;
 using System.Text.RegularExpressions;
 
-public class ConfigTool 
+public class ConfigEditor 
 {
-	public const string JSON_STRUCTS_PATH = "Runtime/Soul/Vo";
-	public const string CONFIG_PATH = "Runtime/Soul/Managers/Config/ConfigDataModelAuto.cs";
-	public static string[] dictmap = new string[]
-	{
-		"Sg_OldApplianceNPC","sg_oldappliance_npc",
-		"Sg_DiassembleVo","sg_decompose"
-	};
+	public const string JSON_STRUCTS_PATH = "Game/Vo";
+	public const string CONFIG_PATH = "Scripts/LKCore/LKConfig/ConfigManagerAuto.cs";
 
-
-	static Dictionary<string,string> hashTable = new Dictionary<string,string>();
-	static void ParseDict()
+	public static void GenConfigManagerAuto()
 	{
-		hashTable.Clear ();
-		int i = 0;
-		while(i < dictmap.Length - 1) {
-			hashTable[dictmap[i]] = dictmap[i+1];
-			i += 2;
-		}
-	}
-
-	[MenuItem("Soul/Config/GenConfigDataAutoModel")]
-	public static void GenConfigDataAutoModel()
-	{
-		ParseDict ();
 		var assetPath = Application.dataPath;
 		var jsonStructsPath = Path.Combine(assetPath, JSON_STRUCTS_PATH);
 		var targetPath = Path.Combine(assetPath, CONFIG_PATH);
@@ -98,7 +79,7 @@ namespace Soul
 			var name = Path.GetFileNameWithoutExtension(jsonStructFile);
 			if (!name.StartsWith("Sg_")) 
 				continue;
-			var lowerName = hashTable.ContainsKey(name) ? hashTable[name] :  name.ToLower();
+			var lowerName = name.ToLower();
 			lowerName = lowerName;
 			var firstUpperName = UtilString.ToCamelCase(lowerName);
 			codes += string.Format("\t\t\tjson = ReadFile(\"JsonTable/{0}\", true);\n", lowerName);
