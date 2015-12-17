@@ -62,7 +62,7 @@ public class ConfigManagerAuto
 ";
 
 		codes += @"
-	public virtual void InitConfigData()
+	public virtual void Init()
 	{
 		string json = string.Empty;
 ";

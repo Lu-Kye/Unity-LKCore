@@ -39,7 +39,7 @@ public class ConfigManagerAuto
 		return list;
 	}
 
-	public virtual void InitConfigData()
+	public virtual void Init()
 	{
 		string json = string.Empty;
 		json = ReadFile("Jsons/vo_traffic_edge");
